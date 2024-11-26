@@ -1,8 +1,17 @@
 <html lang="en">
     <head>
         <title>AnyKey</title>
+        <link rel="manifest" href="./manifest.json">
+        <link rel="icon" href="./icon-192x192.png" type="image/png">
     </head>
     <body>
         <div>Hello, world!</div>
+        <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(() => console.log('Service Worker registered successfully'))
+                    .catch(error => console.error('Service Worker registration failed:', error));
+            }
+        </script>
     </body>
 </html>

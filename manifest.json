@@ -1,0 +1,20 @@
+{
+    "lang": "en-us",
+    "name": "AnyKey App",
+    "short_name": "anykey",
+    "description": "A test application for conversion to PWA",
+    "start_url": "/anykey/index.html",
+    "background_color": "#2f3d58",
+    "theme_color": "#2f3d58",
+    "orientation": "any",
+    "display": "standalone",
+    "icons": [{
+        "src": "/anykey/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+    }, {
+        "src": "/anykey/icon.png",
+        "sizes": "512x512",
+        "type": "image/png"
+    }]
+}
