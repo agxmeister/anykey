@@ -22,6 +22,6 @@ export default function Chat()
     };
 
     return (
-        <div>Chat will be here. {data?.message ?? "loading"}</div>
+        <div>The chat is here: {data?.message ?? "loading"}</div>
     );
 }
