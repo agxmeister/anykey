@@ -1,14 +1,10 @@
 import ReactDOM from 'react-dom/client';
-
-function App() {
-    return <>
-        <div>This is a test React application.</div>
-    </>;
-}
+import App from "./app";
 
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
-root.render(<App />);
+
+root.render(<App/>);
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
