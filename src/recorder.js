@@ -6,6 +6,7 @@ export default function Recorder()
     const [recording, setRecording] = useState(false);
     const [chunks, setChunks] = useState([]);
     const [recordingUrl, setRecordingUrl] = useState(null);
+    const [transcription, setTranscription] = useState(null);
 
     useEffect(() => {
         getMediaRecorder();
@@ -53,7 +54,13 @@ export default function Recorder()
                     method: "POST",
                     body: blob
                 })
-                    .then(response => console.log("Recording was uploaded."))
+                    .then(response => {
+                        console.log("Recording was uploaded.");
+                        response.json().then(data => {
+                            console.log("Transcription is ready.");
+                            setTranscription(data.message);
+                        });
+                    })
                     .catch(error => console.log(error));
 
                 setRecordingUrl(window.URL.createObjectURL(blob));
@@ -73,6 +80,9 @@ export default function Recorder()
                 <div>
                     <audio controls src={recordingUrl}/>
                 </div>
+            ) : null}
+            {transcription ? (
+                <div>{transcription}</div>
             ) : null}
         </div>
     );
