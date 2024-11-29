@@ -18,7 +18,9 @@ export default function Recorder()
                 audio: true,
             })
                 .then((stream) => {
-                    const mediaRecorder = new MediaRecorder(stream);
+                    const mediaRecorder = new MediaRecorder(stream, {
+                        mimeType: 'audio/mp4'
+                    });
                     setMediaRecorder(mediaRecorder);
                     console.log("Media recorder successfully created.")
                 })
@@ -45,7 +47,15 @@ export default function Recorder()
             console.log(`Incoming chunk, total length ${chunks.length}`);
             if (!recording) {
                 console.log("Recording is done, process it...");
-                const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+                const blob = new Blob(chunks, { type: "audio/mp4; codecs=opus" });
+
+                fetch('https://moneypenny.agxmeister.services/api/test', {
+                    method: "POST",
+                    body: blob
+                })
+                    .then(response => console.log("Recording was uploaded."))
+                    .catch(error => console.log(error));
+
                 setRecordingUrl(window.URL.createObjectURL(blob));
                 setChunks([]);
             }
