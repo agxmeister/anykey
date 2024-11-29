@@ -1,4 +1,5 @@
 import Chat from "./chat";
+import Recorder from "./recorder";
 
 export default function App()
 {
@@ -6,6 +7,7 @@ export default function App()
         <>
             <div>This is my test React application!</div>
             <Chat/>
+            <Recorder/>
         </>
     );
 }
