@@ -10,7 +10,6 @@ export default function Chat()
     const fetchData = async () => {
         try {
             const response = await fetch("https://moneypenny.agxmeister.services/api/test");
-            //const response = await fetch("http://localhost:3001/api/test");
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
