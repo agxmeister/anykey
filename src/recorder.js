@@ -1,4 +1,6 @@
 import {useEffect, useState} from "react";
+import * as styles from "./recorder.module.sass"
+import classNames from "classnames";
 
 export default function Recorder()
 {
@@ -35,9 +37,9 @@ export default function Recorder()
 
     const toggleRecording = () => {
         if (!recording) {
-            mediaRecorder.start(1000);
+            //mediaRecorder.start(1000);
         } else {
-            mediaRecorder.stop();
+            //mediaRecorder.stop();
         }
         setRecording(!recording);
     }
@@ -70,10 +72,16 @@ export default function Recorder()
     }
 
     return (
-        <div>
+        <div className={styles.recorder}>
             {mediaRecorder ? (
-                <div>
-                    <button onClick={() => toggleRecording()}>{recording ? "Stop recording" : "Start recording"}</button>
+                <div
+                    className={classNames(
+                        styles.button,
+                        recording ? styles.buttonActive : null,
+                    )}
+                    onClick={() => toggleRecording()}
+                >
+                    {recording ? "Stop recording" : "Start recording"}
                 </div>
             ) : null}
             {recordingUrl ? (

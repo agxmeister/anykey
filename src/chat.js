@@ -1,4 +1,5 @@
 import {useEffect, useState} from "react";
+import * as styles from "./chat.module.sass"
 
 export default function Chat()
 {
@@ -21,6 +22,6 @@ export default function Chat()
     };
 
     return (
-        <div>The chat is here: {data?.message ?? "loading"}</div>
+        <div className={styles.chat}>The chat is here: {data?.message ?? "loading"}</div>
     );
 }

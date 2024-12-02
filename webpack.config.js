@@ -36,6 +36,26 @@ module.exports = function(env, argv) {
                     use: {
                         loader: 'babel-loader',
                     },
+                }, {
+                    test: /\.sass$/i,
+                    use: [
+                        'style-loader',
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: {
+                                    exportLocalsConvention: 'camelCaseOnly',
+                                },
+                            },
+                        },
+                        'sass-loader',
+                    ],
+                }, {
+                    test: /\.css$/i,
+                    use: [
+                        'style-loader',
+                        'css-loader',
+                    ],
                 },
             ],
         },

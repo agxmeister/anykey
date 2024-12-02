@@ -1,5 +1,7 @@
 import {useState} from "react";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
+import * as styles from "./qr.module.sass"
+import classNames from "classnames";
 
 export default function QqDetector()
 {
@@ -9,8 +11,14 @@ export default function QqDetector()
     const toggleActive = () => setActive(!active);
 
     return (
-        <>
-            <button onClick={() => toggleActive()}>{active ? "Turn camera off" : "Turn camera on"}</button>
+        <div className={styles.qr}>
+            <div
+                className={classNames(
+                    styles.button,
+                    active ? styles.buttonActive : null,
+                )}
+                onClick={() => toggleActive()}
+            >{active ? "Turn camera off" : "Turn camera on"}</div>
             {active ? <>
                     <BarcodeScannerComponent
                         width={500}
@@ -27,6 +35,6 @@ export default function QqDetector()
                 </> : null
             }
             <div>{active ? "true" : "false"}</div>
-        </>
+        </div>
     );
 }
