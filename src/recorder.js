@@ -37,9 +37,9 @@ export default function Recorder()
 
     const toggleRecording = () => {
         if (!recording) {
-            //mediaRecorder.start(1000);
+            mediaRecorder.start(1000);
         } else {
-            //mediaRecorder.stop();
+            mediaRecorder.stop();
         }
         setRecording(!recording);
     }
@@ -52,7 +52,7 @@ export default function Recorder()
                 console.log("Recording is done, process it...");
                 const blob = new Blob(chunks, { type: "audio/mp4; codecs=opus" });
 
-                fetch('https://moneypenny.agxmeister.services/api/test', {
+                fetch(BASE_INSIGHTS_URL + "/api/test", {
                     method: "POST",
                     body: blob
                 })

@@ -1,9 +1,15 @@
+const {DefinePlugin} = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = function(env, argv) {
     const plugins = [
+        new DefinePlugin({
+            BASE_INSIGHTS_URL: JSON.stringify(
+                process.env.BASE_INSIGHTS_URL || 'https://moneypenny.agxmeister.services'
+            )
+        }),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             filename: './index.html',
