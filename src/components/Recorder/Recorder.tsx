@@ -1,6 +1,7 @@
+import * as React from "react";
 import {useEffect, useState} from "react";
-import * as styles from "./recorder.module.sass"
 import classNames from "classnames";
+import * as styles from "./Recorder.module.sass"
 
 export default function Recorder()
 {
@@ -45,7 +46,7 @@ export default function Recorder()
     }
 
     if (mediaRecorder) {
-        mediaRecorder.ondataavailable = (event) => {
+        mediaRecorder.ondataavailable = (event: any) => {
             chunks.push(event.data);
             console.log(`Incoming chunk, total length ${chunks.length}`);
             if (!recording) {

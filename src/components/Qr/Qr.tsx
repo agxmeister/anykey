@@ -1,7 +1,8 @@
+import * as React from "react";
 import {useState} from "react";
-import BarcodeScannerComponent from "react-qr-barcode-scanner";
-import * as styles from "./qr.module.sass"
 import classNames from "classnames";
+import BarcodeScannerComponent from "react-qr-barcode-scanner";
+import * as styles from "./Qr.module.sass"
 
 export default function QqDetector()
 {
@@ -25,7 +26,7 @@ export default function QqDetector()
                         height={500}
                         onUpdate={(err, result) => {
                             if (result) {
-                                setData(result.text);
+                                setData(result.getText());
                             } else {
                                 setData("not found");
                             }

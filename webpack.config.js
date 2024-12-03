@@ -76,7 +76,7 @@ module.exports = function(env, argv) {
             ],
         },
         resolve: {
-            extensions: ['.tsx', '.ts', '.js'],
+            extensions: ['.tsx', '.ts', '.js', ".css", ".sass"],
         },
         plugins: plugins,
     }

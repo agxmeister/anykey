@@ -1,5 +1,6 @@
+import * as React from "react";
 import {useEffect, useState} from "react";
-import * as styles from "./chat.module.sass"
+import * as styles from "./Chat.module.sass"
 
 export default function Chat()
 {
