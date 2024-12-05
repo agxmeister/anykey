@@ -33,3 +33,27 @@ $border-color: #2b2d42
     border-top: 0.4vw solid $border-color
     border-bottom: 0.4vw solid $border-color
     opacity: 0.9
+    display: flex
+    flex-direction: column
+
+    .message
+        border: 0.4vw solid $border-color
+        margin: 0.8vw 0.8vw 0 0.8vw
+        padding: 1.2vw
+        display: flex
+
+        span
+            padding: 0 0.8vw
+            font-weight: bold
+
+    .user
+        text-align: left
+        max-width: 90%
+        align-self: flex-start
+        flex-direction: row
+
+    .assistant
+        text-align: right
+        max-width: 90%
+        align-self: flex-end
+        flex-direction: row-reverse
