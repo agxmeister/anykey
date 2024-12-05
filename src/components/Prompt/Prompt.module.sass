@@ -1,0 +1,42 @@
+$text-color: #373737
+
+.prompt
+    width: 100%
+    height: 100%
+    color: #373737
+    display: flex
+    justify-content: center
+    align-items: center
+
+    h1
+        text-align: center
+        font-size: 4vw
+        color: $text-color
+
+    p
+        text-align: center
+        font-size: 3vw
+        color: $text-color
+
+    .spinner
+        color: #373737
+        display: flex
+        justify-content: center
+        align-items: center
+
+        &:after
+            box-sizing: border-box
+            content: " "
+            display: block
+            width: 30vw
+            height: 30vw
+            border-radius: 50%
+            border: 2vw solid currentColor
+            border-color: currentColor transparent currentColor transparent
+            animation: spinner 1.2s linear infinite
+
+    @keyframes spinner
+        0%
+            transform: rotate(0deg)
+        100%
+            transform: rotate(360deg)

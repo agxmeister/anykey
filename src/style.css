@@ -2,5 +2,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: antiquewhite;
-    font-size: 4vw;
+    font-size: 3vw;
+    font-family: Tahoma, serif;
 }

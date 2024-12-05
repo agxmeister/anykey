@@ -5,9 +5,11 @@ import * as styles from "./VoiceRecorder.module.sass"
 
 type RecorderProps = {
     onUserInputReady: (input: string) => void,
+    onToggleRecording: (isRecordingStarted: boolean) => void,
+    isAvailable: boolean,
 }
 
-export default function VoiceRecorder({onUserInputReady}: RecorderProps)
+export default function VoiceRecorder({onUserInputReady, onToggleRecording, isAvailable}: RecorderProps)
 {
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>(null);
     const [isRecordingStarted, setIsRecordingStarted] = useState(false);
@@ -37,11 +39,12 @@ export default function VoiceRecorder({onUserInputReady}: RecorderProps)
 
     const toggleRecording = () => {
         if (!isRecordingStarted) {
+            setIsRecordingStarted(true);
+            onToggleRecording(true);
             mediaRecorder.start(1000);
         } else {
             mediaRecorder.stop();
         }
-        setIsRecordingStarted(!isRecordingStarted);
     }
 
     if (!mediaRecorder) {
@@ -62,8 +65,26 @@ export default function VoiceRecorder({onUserInputReady}: RecorderProps)
             });
             const data = await response.json();
             onUserInputReady(data.message);
+            onToggleRecording(false);
+            setIsRecordingStarted(false);
         }
     };
+
+    const getLabel = () => {
+        switch (true) {
+            case !isAvailable:
+                return "Please, wait";
+            case isRecordingStarted:
+                return (
+                    <div className={styles.indicator}>
+                        <div></div>
+                        <div></div>
+                    </div>
+                );
+            default:
+                return "Start recording";
+        }
+    }
 
     return (
         <div className={styles.recorder}>
@@ -71,10 +92,11 @@ export default function VoiceRecorder({onUserInputReady}: RecorderProps)
                 className={classNames(
                     styles.button,
                     isRecordingStarted ? styles.buttonActive : null,
+                    !isAvailable ? styles.buttonDisabled : null,
                 )}
-                onClick={() => toggleRecording()}
+                onClick={() => isAvailable ? toggleRecording() : null}
             >
-                {isRecordingStarted ? "Stop recording" : "Start recording"}
+                {getLabel()}
             </div>
         </div>
     );

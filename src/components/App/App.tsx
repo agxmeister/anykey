@@ -4,9 +4,9 @@ import VoiceRecorder from "../VoiceRecorder/VoiceRecorder";
 import QqDetector from "../Qr/Qr";
 import * as styles from './App.module.sass';
 import {useState} from "react";
-import Insight from "../Insight/Insight";
+import {InsightTab} from "../InsightTab/InsightTab";
 
-type InsightData = {
+export type InsightData = {
     id: string,
     title: string,
     content: string,
@@ -28,14 +28,22 @@ export default function App()
     const [activeTab, setActiveTab] = useState<Tab>(Tab.insight);
 
     const [insightData, setInsightData] = useState<InsightData>(null);
+    const [isRecordingStarted, setIsRecordingStarted] = useState(false);
+    const [isInsightRequested, setIsInsightRequested] = useState(false);
 
     const onUserInputReady = (input: string) => {
-        startInsight(input).then((insightData) => {
+        setIsInsightRequested(true)
+        requestInsight(input).then((insightData) => {
+            setIsInsightRequested(false)
             setInsightData(insightData);
         });
     };
 
-    const startInsight = async (input: string): Promise<InsightData> => {
+    const onToggleRecording = (isRecordingStarted: boolean) => {
+        setIsRecordingStarted(isRecordingStarted);
+    }
+
+    const requestInsight = async (input: string): Promise<InsightData> => {
         console.log(`Input: ${input}`);
         const url = insightData
             ? BASE_INSIGHTS_URL + "/api/insights/" + insightData.id
@@ -53,10 +61,16 @@ export default function App()
         <div className={styles.app}>
             {activeTab === Tab.insight ? (
                 <>
-                    {insightData ? (
-                        <Insight title={insightData.title} content={insightData.content}/>
-                    ) : null}
-                    <VoiceRecorder onUserInputReady={onUserInputReady}/>
+                    <InsightTab
+                        insightData={insightData}
+                        isInsightRequested={isInsightRequested}
+                        isRecordingStarted={isRecordingStarted}
+                    />
+                    <VoiceRecorder
+                        onUserInputReady={onUserInputReady}
+                        onToggleRecording={onToggleRecording}
+                        isAvailable={!isInsightRequested}
+                    />
                 </>
             ) : null}
             {activeTab === Tab.chat ? (
