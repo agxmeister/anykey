@@ -3,7 +3,7 @@ import VoiceRecorder from "../VoiceRecorder/VoiceRecorder";
 import QqDetector from "../Qr/Qr";
 import * as styles from './App.module.sass';
 import {useState} from "react";
-import {InsightTab} from "../InsightTab/InsightTab";
+import {Insight} from "../Insight/Insight";
 import History from "../History/History";
 
 export type InsightData = {
@@ -62,7 +62,7 @@ export default function App()
         <div className={styles.app}>
             {activeTab === Tab.insight ? (
                 <>
-                    <InsightTab
+                    <Insight
                         insightData={insightData}
                         isInsightRequested={isInsightRequested}
                         isRecordingStarted={isRecordingStarted}
