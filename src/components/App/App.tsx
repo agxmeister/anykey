@@ -17,8 +17,16 @@ type InsightDataConversationItem = {
     message: string,
 }
 
+enum Tab {
+    "insight",
+    "chat",
+    "settings",
+}
+
 export default function App()
 {
+    const [activeTab, setActiveTab] = useState<Tab>(Tab.insight);
+
     const [insightData, setInsightData] = useState<InsightData>(null);
 
     const onUserInputReady = (input: string) => {
@@ -41,12 +49,20 @@ export default function App()
 
     return (
         <div className={styles.app}>
-            {insightData ? (
-                <Insight title={insightData.title} content={insightData.content}/>
+            {activeTab === Tab.insight ? (
+                <>
+                    {insightData ? (
+                        <Insight title={insightData.title} content={insightData.content}/>
+                    ) : null}
+                    <VoiceRecorder onUserInputReady={onUserInputReady}/>
+                </>
             ) : null}
-            <Chat/>
-            <VoiceRecorder onUserInputReady={onUserInputReady}/>
-            <QqDetector/>
+            {activeTab === Tab.chat ? (
+                <Chat/>
+            ) : null}
+            {activeTab === Tab.settings ? (
+                <QqDetector/>
+            ) : null}
         </div>
     );
 }
