@@ -13,7 +13,7 @@ export default function Insight({title, content}: InsightsProps)
     const [displayContent, setDisplayContent] = useState(null);
     useEffect(() => {
         onDisplayContent();
-    }, []);
+    }, [content]);
 
     const onDisplayContent = async () => {
         setDisplayContent(await marked.parse(content));

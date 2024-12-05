@@ -31,14 +31,16 @@ export default function App()
 
     const onUserInputReady = (input: string) => {
         startInsight(input).then((insightData) => {
-            console.log(insightData)
             setInsightData(insightData);
         });
     };
 
     const startInsight = async (input: string): Promise<InsightData> => {
         console.log(`Input: ${input}`);
-        const response = await fetch(BASE_INSIGHTS_URL + "/api/insights", {
+        const url = insightData
+            ? BASE_INSIGHTS_URL + "/api/insights/" + insightData.id
+            : BASE_INSIGHTS_URL + "/api/insights";
+        const response = await fetch(url, {
             method: "POST",
             body: JSON.stringify({
                 userInput: input
