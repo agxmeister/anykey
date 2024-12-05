@@ -1,4 +1,4 @@
-const path = require('path');
+const {resolve} = require('path');
 const {DefinePlugin} = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -38,7 +38,7 @@ module.exports = function(env, argv) {
         entry: './src/index.js',
         output: {
             filename: 'bundle.js',
-            path: path.resolve(__dirname, 'dist'),
+            path: resolve(__dirname, 'dist'),
         },
         module: {
             rules: [

@@ -4,7 +4,7 @@ import classNames from "classnames";
 import * as styles from "./VoiceRecorder.module.sass"
 
 type RecorderProps = {
-    onUserInputReady: Function,
+    onUserInputReady: (input: string) => void,
 }
 
 export default function VoiceRecorder({onUserInputReady}: RecorderProps)
