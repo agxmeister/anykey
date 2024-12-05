@@ -1,10 +1,10 @@
 import * as React from "react";
-import Chat from "../Chat/Chat";
 import VoiceRecorder from "../VoiceRecorder/VoiceRecorder";
 import QqDetector from "../Qr/Qr";
 import * as styles from './App.module.sass';
 import {useState} from "react";
 import {InsightTab} from "../InsightTab/InsightTab";
+import History from "../History/History";
 
 export type InsightData = {
     id: string,
@@ -12,7 +12,8 @@ export type InsightData = {
     content: string,
     conversation: InsightDataConversationItem[],
 }
-type InsightDataConversationItem = {
+
+export type InsightDataConversationItem = {
     role: "user" | "assistant",
     message: string,
 }
@@ -73,12 +74,10 @@ export default function App()
                     />
                 </>
             ) : null}
-            {activeTab === Tab.chat ? (
-                <Chat/>
-            ) : null}
             {activeTab === Tab.settings ? (
                 <QqDetector/>
             ) : null}
+            <History conversation={insightData ? insightData.conversation : null}/>
         </div>
     );
 }
