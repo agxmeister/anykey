@@ -13,6 +13,7 @@ export default function VoiceRecorder({onUserInputReady, onToggleRecording, isAv
 {
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder>(null);
     const [isRecordingStarted, setIsRecordingStarted] = useState(false);
+    const [isProcessingStarted, setIsProcessingStarted] = useState(false);
     const recordingBufferRef = useRef<Blob[]>([]);
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export default function VoiceRecorder({onUserInputReady, onToggleRecording, isAv
             onToggleRecording(true);
             mediaRecorder.start(1000);
         } else {
+            setIsProcessingStarted(true);
             mediaRecorder.stop();
         }
     }
@@ -67,6 +69,7 @@ export default function VoiceRecorder({onUserInputReady, onToggleRecording, isAv
             onUserInputReady(data.message);
             onToggleRecording(false);
             setIsRecordingStarted(false);
+            setIsProcessingStarted(false);
         }
     };
 
@@ -74,6 +77,8 @@ export default function VoiceRecorder({onUserInputReady, onToggleRecording, isAv
         switch (true) {
             case !isAvailable:
                 return "Please, wait";
+            case isProcessingStarted:
+                return "Processing..."
             case isRecordingStarted:
                 return (
                     <div className={styles.indicator}>
@@ -92,7 +97,7 @@ export default function VoiceRecorder({onUserInputReady, onToggleRecording, isAv
                 className={classNames(
                     styles.button,
                     isRecordingStarted ? styles.buttonActive : null,
-                    !isAvailable ? styles.buttonDisabled : null,
+                    !isAvailable || isProcessingStarted ? styles.buttonDisabled : null,
                 )}
                 onClick={() => isAvailable ? toggleRecording() : null}
             >

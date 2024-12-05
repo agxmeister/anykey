@@ -41,7 +41,7 @@ export function InsightTab({insightData, isInsightRequested, isRecordingStarted}
         )],
         [Mode.waitingForAssistantResponse, (
             <Prompt
-                title={"Waiting a minute..."}
+                title={"Wait a minute..."}
                 description={"Your assistant is working on your request, please, wait a bit."}
                 isDisplaySpinner={true}
             />
