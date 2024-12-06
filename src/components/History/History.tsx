@@ -1,48 +1,27 @@
 import * as React from "react";
 import * as styles from "./History.module.sass"
-import {useState} from "react";
 import {InsightDataConversationItem} from "../App/App";
 import classNames from "classnames";
 
-type BookmarkProps = {
+type HistoryProps = {
     conversation?: InsightDataConversationItem[]
 }
 
-export default function History({conversation}: BookmarkProps)
+export default function History({conversation}: HistoryProps)
 {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleIsOpen = () => {
-        setIsOpen(!isOpen);
-    };
-
     return (
-        <>
-            {isOpen ? (
+        <div className={styles.history}>
+            {conversation ? conversation.map((message) => (
                 <div
-                    className={styles.tab}
-                    onClick={() => toggleIsOpen()}
+                    className={classNames(
+                        styles.message,
+                        message.role === "user" ? styles.user : styles.assistant,
+                    )}
                 >
-                    {conversation ? conversation.reverse().map((message) => (
-                        <div
-                            className={classNames(
-                                styles.message,
-                                message.role === "user" ? styles.user : styles.assistant,
-                            )}
-                        >
-                            <span>{message.role === "user" ? "You" : "Assistant"}</span>
-                            {message.message}
-                        </div>
-                    )) : null}
+                    <span>{message.role === "user" ? "You" : "Assistant"}</span>
+                    {message.message}
                 </div>
-            ) : (
-                <div
-                    className={styles.bookmark}
-                    onClick={() => toggleIsOpen()}
-                >
-                    <div>History</div>
-                </div>
-            )}
-        </>
+            )).reverse() : null}
+        </div>
     );
 }

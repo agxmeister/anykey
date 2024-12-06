@@ -7,35 +7,38 @@ import * as styles from "./Qr.module.sass"
 export default function QqDetector()
 {
     const [active, setActive] = useState(false);
-    const [data, setData] = useState("");
+    const [data, setData] = useState(null);
 
     const toggleActive = () => setActive(!active);
 
     return (
         <div className={styles.qr}>
+            <div className={styles.line}>
+                {"WordPress API URL: undefined"}
+            </div>
+            <div className={styles.line}>
+                {"Secret: undefined"}
+            </div>
             <div
-                className={classNames(
-                    styles.button,
-                    active ? styles.buttonActive : null,
-                )}
+                className={styles.action}
                 onClick={() => toggleActive()}
-            >{active ? "Turn camera off" : "Turn camera on"}</div>
-            {active ? <>
+            >
+                {active ? "Cancel" : "Scan settings"}
+            </div>
+            {active ? (
+                <>
                     <BarcodeScannerComponent
-                        width={500}
-                        height={500}
+                        width={700}
+                        height={700}
                         onUpdate={(err, result) => {
                             if (result) {
                                 setData(result.getText());
-                            } else {
-                                setData("not found");
                             }
                         }}
                     />
-                    <div>{data}</div>
-                </> : null
-            }
-            <div>{active ? "true" : "false"}</div>
+                    {data ? <div>{data}</div> : null}
+                </>
+            ) : null}
         </div>
     );
 }

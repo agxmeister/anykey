@@ -5,6 +5,7 @@ import * as styles from './App.module.sass';
 import {useState} from "react";
 import {Insight} from "../Insight/Insight";
 import History from "../History/History";
+import Tab from "../Tab/Tab";
 
 export type InsightData = {
     id: string,
@@ -18,16 +19,8 @@ export type InsightDataConversationItem = {
     message: string,
 }
 
-enum Tab {
-    "insight",
-    "chat",
-    "settings",
-}
-
 export default function App()
 {
-    const [activeTab, setActiveTab] = useState<Tab>(Tab.insight);
-
     const [insightData, setInsightData] = useState<InsightData>(null);
     const [isRecordingStarted, setIsRecordingStarted] = useState(false);
     const [isInsightRequested, setIsInsightRequested] = useState(false);
@@ -60,24 +53,32 @@ export default function App()
 
     return (
         <div className={styles.app}>
-            {activeTab === Tab.insight ? (
-                <>
-                    <Insight
-                        insightData={insightData}
-                        isInsightRequested={isInsightRequested}
-                        isRecordingStarted={isRecordingStarted}
-                    />
-                    <VoiceRecorder
-                        onUserInputReady={onUserInputReady}
-                        onToggleRecording={onToggleRecording}
-                        isAvailable={!isInsightRequested}
-                    />
-                </>
-            ) : null}
-            {activeTab === Tab.settings ? (
-                <QqDetector/>
-            ) : null}
-            <History conversation={insightData ? insightData.conversation : null}/>
+            <>
+                <Insight
+                    insightData={insightData}
+                    isInsightRequested={isInsightRequested}
+                    isRecordingStarted={isRecordingStarted}
+                />
+                <VoiceRecorder
+                    onUserInputReady={onUserInputReady}
+                    onToggleRecording={onToggleRecording}
+                    isAvailable={!isInsightRequested}
+                />
+            </>
+            <Tab
+                name={"History"}
+                position={0}
+                node={
+                    <History conversation={insightData ? insightData.conversation : null}/>
+                }
+            />
+            <Tab
+                name={"Settings"}
+                position={1}
+                node={
+                    <QqDetector/>
+                }
+            />
         </div>
     );
 }
