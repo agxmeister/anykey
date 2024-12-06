@@ -1,11 +1,12 @@
 import * as React from "react";
 import VoiceRecorder from "../VoiceRecorder/VoiceRecorder";
-import QqDetector from "../Qr/Qr";
 import * as styles from './App.module.sass';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Insight} from "../Insight/Insight";
 import History from "../History/History";
 import Tab from "../Tab/Tab";
+import Settings from "../Settings/Settings";
+import Onboarding from "../Onboarding/Onboarding";
 
 export type InsightData = {
     id: string,
@@ -24,6 +25,17 @@ export default function App()
     const [insightData, setInsightData] = useState<InsightData>(null);
     const [isRecordingStarted, setIsRecordingStarted] = useState(false);
     const [isInsightRequested, setIsInsightRequested] = useState(false);
+    const [settings, setSettings] = useState(localStorage.getItem("settings"));
+
+    const onOnboardingReady = (settings: string) => {
+        localStorage.setItem("settings", settings);
+        setSettings(settings);
+    }
+
+    const onClearSettings = () => {
+        localStorage.setItem("settings", null);
+        setSettings(null);
+    }
 
     const onUserInputReady = (input: string) => {
         setIsInsightRequested(true)
@@ -53,18 +65,24 @@ export default function App()
 
     return (
         <div className={styles.app}>
-            <>
-                <Insight
-                    insightData={insightData}
-                    isInsightRequested={isInsightRequested}
-                    isRecordingStarted={isRecordingStarted}
+            {settings ? (
+                <>
+                    <Insight
+                        insightData={insightData}
+                        isInsightRequested={isInsightRequested}
+                        isRecordingStarted={isRecordingStarted}
+                    />
+                    <VoiceRecorder
+                        onUserInputReady={onUserInputReady}
+                        onToggleRecording={onToggleRecording}
+                        isAvailable={!isInsightRequested}
+                    />
+                </>
+            ) : (
+                <Onboarding
+                    onOnboardingReady={onOnboardingReady}
                 />
-                <VoiceRecorder
-                    onUserInputReady={onUserInputReady}
-                    onToggleRecording={onToggleRecording}
-                    isAvailable={!isInsightRequested}
-                />
-            </>
+            )}
             <Tab
                 name={"History"}
                 position={0}
@@ -76,7 +94,7 @@ export default function App()
                 name={"Settings"}
                 position={1}
                 node={
-                    <QqDetector/>
+                    <Settings onClearSettings={onClearSettings}/>
                 }
             />
         </div>

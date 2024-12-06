@@ -21,7 +21,7 @@ export default function Tab({name, position, node}: TapProps)
             <div
                 className={styles.bookmark}
                 style={{
-                    gridRowStart: position * 5 + 3
+                    gridRowStart: position * 4 + 3
                 }}
                 onClick={() => toggleIsOpen()}
             >
