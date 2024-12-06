@@ -1,12 +1,17 @@
 import * as React from "react";
 import VoiceRecorder from "../VoiceRecorder/VoiceRecorder";
 import * as styles from './App.module.sass';
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Insight} from "../Insight/Insight";
 import History from "../History/History";
 import Tab from "../Tab/Tab";
 import Settings from "../Settings/Settings";
 import Onboarding from "../Onboarding/Onboarding";
+
+export type Settings = {
+    url: string,
+    secret: string,
+}
 
 export type InsightData = {
     id: string,
@@ -25,10 +30,10 @@ export default function App()
     const [insightData, setInsightData] = useState<InsightData>(null);
     const [isRecordingStarted, setIsRecordingStarted] = useState(false);
     const [isInsightRequested, setIsInsightRequested] = useState(false);
-    const [settings, setSettings] = useState(localStorage.getItem("settings"));
+    const [settings, setSettings] = useState<Settings>(JSON.parse(localStorage.getItem("settings")));
 
-    const onOnboardingReady = (settings: string) => {
-        localStorage.setItem("settings", settings);
+    const onOnboardingReady = (settings: Settings) => {
+        localStorage.setItem("settings", JSON.stringify(settings));
         setSettings(settings);
     }
 
@@ -50,14 +55,14 @@ export default function App()
     }
 
     const requestInsight = async (input: string): Promise<InsightData> => {
-        console.log(`Input: ${input}`);
         const url = insightData
             ? BASE_INSIGHTS_URL + "/api/insights/" + insightData.id
             : BASE_INSIGHTS_URL + "/api/insights";
         const response = await fetch(url, {
             method: "POST",
             body: JSON.stringify({
-                userInput: input
+                settings: settings,
+                userInput: input,
             })
         });
         return await response.json();
@@ -94,7 +99,7 @@ export default function App()
                 name={"Settings"}
                 position={1}
                 node={
-                    <Settings onClearSettings={onClearSettings}/>
+                    <Settings settings={settings} onClearSettings={onClearSettings}/>
                 }
             />
         </div>

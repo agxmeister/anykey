@@ -3,36 +3,37 @@ import {useState} from "react";
 import * as styles from "./Onboarding.module.sass"
 import classNames from "classnames";
 import QqReader from "../QrReader/QrReader";
+import {Settings} from "../App/App";
 
 type OnboardingProps = {
-    onOnboardingReady: (data: string) => void;
+    onOnboardingReady: (data: Settings) => void;
 }
 
 export default function Onboarding({onOnboardingReady}: OnboardingProps)
 {
     const [active, setActive] = useState(false);
-    const [data, setData] = useState(null);
+    const [settings, setSettings] = useState<Settings>(null);
 
     const toggleActive = () => {
         setActive(!active);
-        if (data) {
-            onOnboardingReady(data);
+        if (settings) {
+            onOnboardingReady(settings);
         }
     };
 
     const getLabel = () => {
         switch (true) {
-            case !active && !data:
+            case !active && !settings:
                 return "Start camera";
-            case active && !data:
+            case active && !settings:
                 return "Stop camera";
             default:
                 return "Save and go!";
         }
     };
 
-    const onDataReady = (data: string) => {
-        setData(data);
+    const onSettingsReady = (data: Settings) => {
+        setSettings(data);
     }
 
     return (
@@ -40,17 +41,14 @@ export default function Onboarding({onOnboardingReady}: OnboardingProps)
             <div
                 className={styles.overlay}
                 style={{
-                    backgroundColor: data ? "#8cb369" : "#4a5759",
+                    backgroundColor: settings ? "#8cb369" : "#4a5759",
                 }}
             />
             <div className={styles.viewport}>
                 {active ? (
-                    <>
-                        <QqReader
-                            onDataReady={onDataReady}
-                        />
-                        {data ? <div>{data}</div> : null}
-                    </>
+                    <QqReader
+                        onSettingsReady={onSettingsReady}
+                    />
                 ) : null}
             </div>
             <div
