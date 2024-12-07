@@ -9,7 +9,7 @@ import Settings from "../Settings/Settings";
 import Onboarding from "../Onboarding/Onboarding";
 
 export type Settings = {
-    url: string,
+    publishUrl: string,
     secret: string,
 }
 

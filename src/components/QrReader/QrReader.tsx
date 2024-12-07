@@ -24,10 +24,10 @@ export default function QqReader({onSettingsReady}: QrReaderProps)
                     const schema = {
                         "type": "object",
                         "properties": {
-                            "url": { "type": "string" },
+                            "publishUrl": { "type": "string" },
                             "secret": { "type": "string" }
                         },
-                        "required": ["url", "secret"],
+                        "required": ["publishUrl", "secret"],
                         "additionalProperties": false,
                     }
                     const getIsValid = ajv.compile<Settings>(schema);

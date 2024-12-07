@@ -13,7 +13,7 @@ export default function Settings({settings, onClearSettings}: SettingsProps)
     return (
         <div className={styles.settings}>
             <div className={styles.line}>
-                {`WordPress API URL: ${settings?.url}`}
+                {`Publish URL: ${settings?.publishUrl}`}
             </div>
             <div className={styles.line}>
                 {`Secret: ${settings?.secret.replaceAll(/./g, '*')}`}
