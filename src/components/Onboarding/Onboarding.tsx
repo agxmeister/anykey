@@ -4,6 +4,7 @@ import * as styles from "./Onboarding.module.sass"
 import classNames from "classnames";
 import QqReader from "../QrReader/QrReader";
 import {Settings} from "../App/App";
+import Prompt from "../Prompt/Prompt";
 
 type OnboardingProps = {
     onOnboardingReady: (data: Settings) => void;
@@ -41,7 +42,7 @@ export default function Onboarding({onOnboardingReady}: OnboardingProps)
             <div
                 className={styles.overlay}
                 style={{
-                    backgroundColor: settings ? "#8cb369" : "#4a5759",
+                    backgroundColor: settings ? "#8cb369" : "#343a40",
                 }}
             />
             <div className={styles.viewport}>
@@ -49,7 +50,13 @@ export default function Onboarding({onOnboardingReady}: OnboardingProps)
                     <QqReader
                         onSettingsReady={onSettingsReady}
                     />
-                ) : null}
+                ) : (
+                    <Prompt
+                        title={"Connect to your website"}
+                        description={"To start using the application, you must scan the QR code on your website."}
+                        style={"light"}
+                    />
+                )}
             </div>
             <div
                 className={classNames(

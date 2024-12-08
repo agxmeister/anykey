@@ -15,10 +15,10 @@ export default function History({conversation}: HistoryProps)
                 <div
                     className={classNames(
                         styles.message,
-                        message.role === "user" ? styles.user : styles.assistant,
+                        message.role === "user" ? styles.messageUser : styles.messageAssistant,
                     )}
                 >
-                    <span>{message.role === "user" ? "You" : "Assistant"}</span>
+                    <span className={styles.role}>{message.role === "user" ? "You" : "Assistant"}</span>
                     {message.message}
                 </div>
             )).reverse() : null}

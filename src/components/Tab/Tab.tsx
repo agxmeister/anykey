@@ -37,7 +37,9 @@ export default function Tab({name, position, node}: TapProps)
                             {`Close ${name}`}
                         </div>
                     </div>
-                    {node}
+                    <div className={styles.node}>
+                        {node}
+                    </div>
                 </div>
             ) : null}
         </>

@@ -47,7 +47,10 @@ export function Insight({insightData, isInsightRequested, isRecordingStarted}: I
             />
         )],
         [Mode.initialInputRequired, (
-            <Prompt title={"Welcome!"} description={"Explain your insight to start."}/>
+            <Prompt
+                title={"Welcome!"}
+                description={"Click the button below to start working on a new article for your blog."}
+            />
         )],
         [Mode.onReview, (
             <Content title={insightData?.title} content={insightData?.content}/>

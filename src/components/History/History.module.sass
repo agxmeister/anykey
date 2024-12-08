@@ -4,25 +4,31 @@ $border-color: #2b2d42
 .history
     display: flex
     flex-direction: column
+    height: 100%
+    overflow: scroll
 
     .message
         border: 0.4vw solid $border-color
         margin: 0.8vw 0.8vw 0 0.8vw
         padding: 1.2vw
         display: flex
+        word-wrap: anywhere
 
-        span
+        &-user
+            text-align: left
+            max-width: 90%
+            align-self: flex-start
+            flex-direction: row
+            background-color: #e3f2fd
+
+        &-assistant
+            text-align: right
+            max-width: 90%
+            align-self: flex-end
+            flex-direction: row-reverse
+            background-color: #d8f3dc
+
+        .role
             padding: 0 0.8vw
             font-weight: bold
-
-    .user
-        text-align: left
-        max-width: 90%
-        align-self: flex-start
-        flex-direction: row
-
-    .assistant
-        text-align: right
-        max-width: 90%
-        align-self: flex-end
-        flex-direction: row-reverse
+            word-wrap: normal

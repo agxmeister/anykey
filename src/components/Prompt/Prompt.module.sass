@@ -1,22 +1,26 @@
-$text-color: #373737
+$text-color-dark: #373737
+$text-color-light: #e9ecef
 
 .prompt
     width: 100%
     height: 100%
-    color: #373737
     display: flex
     justify-content: center
     align-items: center
 
+    &-dark
+        color: $text-color-dark
+
+    &-light
+        color: $text-color-light
+
     h1
         text-align: center
-        font-size: 4vw
-        color: $text-color
+        font-size: 5vw
 
     p
         text-align: center
-        font-size: 3vw
-        color: $text-color
+        font-size: 3.5vw
 
     .spinner
         color: #373737
