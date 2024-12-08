@@ -7,6 +7,7 @@ import History from "../History/History";
 import Tab from "../Tab/Tab";
 import Settings from "../Settings/Settings";
 import Onboarding from "../Onboarding/Onboarding";
+import Control from "../Control/Control";
 
 export type Settings = {
     publishUrl: string,
@@ -27,7 +28,7 @@ export type InsightDataConversationItem = {
 
 export default function App()
 {
-    const [insightData, setInsightData] = useState<InsightData>(null);
+    const [insightData, setInsightData] = useState<InsightData>(JSON.parse(localStorage.getItem("insightData")));
     const [isRecordingStarted, setIsRecordingStarted] = useState(false);
     const [isInsightRequested, setIsInsightRequested] = useState(false);
     const [settings, setSettings] = useState<Settings>(JSON.parse(localStorage.getItem("settings")));
@@ -42,10 +43,16 @@ export default function App()
         setSettings(null);
     }
 
+    const onNew = () => {
+        localStorage.setItem("insightData", null);
+        setInsightData(null);
+    }
+
     const onUserInputReady = (input: string) => {
         setIsInsightRequested(true)
         requestInsight(input).then((insightData) => {
-            setIsInsightRequested(false)
+            setIsInsightRequested(false);
+            localStorage.setItem("insightData", JSON.stringify(insightData));
             setInsightData(insightData);
         });
     };
@@ -102,6 +109,7 @@ export default function App()
                     <Settings settings={settings} onClearSettings={onClearSettings}/>
                 }
             />
+            <Control name={"Start New"} position={0} handler={onNew}/>
         </div>
     );
 }
