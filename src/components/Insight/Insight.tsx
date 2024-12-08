@@ -11,7 +11,8 @@ type InsightTabProps = {
 }
 
 enum Mode {
-    "recodingInProgress",
+    "isInitialRecordingInProgress",
+    "recordingInProgress",
     "waitingForAssistantResponse",
     "initialInputRequired",
     "onReview",
@@ -21,8 +22,10 @@ export function Insight({insightData, isInsightRequested, isRecordingStarted}: I
 {
     const getMode = (() => {
         switch(true) {
+            case isRecordingStarted && !insightData:
+                return Mode.isInitialRecordingInProgress;
             case isRecordingStarted:
-                return Mode.recodingInProgress;
+                return Mode.recordingInProgress;
             case isInsightRequested:
                 return Mode.waitingForAssistantResponse;
             case !insightData:
@@ -33,11 +36,14 @@ export function Insight({insightData, isInsightRequested, isRecordingStarted}: I
     });
 
     const content = new Map([
-        [Mode.recodingInProgress, (
+        [Mode.isInitialRecordingInProgress, (
             <Prompt
                 title={"Keep talking..."}
                 description={"Your assistant is listening to you and will be glad to help."}
             />
+        )],
+        [Mode.recordingInProgress, (
+            <Content title={insightData?.title} content={insightData?.content}/>
         )],
         [Mode.waitingForAssistantResponse, (
             <Prompt
