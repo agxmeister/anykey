@@ -1,0 +1,27 @@
+.toaster
+    z-index: 110
+    grid-column-start: 1
+    grid-column-end: span 20
+    grid-row-start: 1
+    grid-row-end: 5
+    overflow: hidden
+    background-color: #70a288
+    border-bottom: 0.4vw solid #2b2d42
+    opacity: 1
+    display: flex
+    justify-content: left
+    align-items: center
+    animation: hide 5s 0s forwards
+
+    .content
+        padding: 1vw 2vw
+
+@keyframes hide
+    80%
+        opacity: 1
+        z-index: 110
+    99%
+        z-index: 110
+    100%
+        opacity: 0
+        z-index: -1

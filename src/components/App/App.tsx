@@ -8,6 +8,7 @@ import Tab from "../Tab/Tab";
 import Settings from "../Settings/Settings";
 import Onboarding from "../Onboarding/Onboarding";
 import Control from "../Control/Control";
+import Toaster from "../Toaster/Toaster";
 
 export type Settings = {
     publishUrl: string,
@@ -32,6 +33,7 @@ export default function App()
     const [isRecordingStarted, setIsRecordingStarted] = useState(false);
     const [isInsightRequested, setIsInsightRequested] = useState(false);
     const [settings, setSettings] = useState<Settings>(JSON.parse(localStorage.getItem("settings")));
+    const [isDisplayLastAssistantMessage, setIsDisplayLastAssistantMessage] = useState(false);
 
     const onOnboardingReady = (settings: Settings) => {
         localStorage.setItem("settings", JSON.stringify(settings));
@@ -50,6 +52,7 @@ export default function App()
 
     const onUserInputReady = (input: string) => {
         setIsInsightRequested(true)
+        setIsDisplayLastAssistantMessage(false);
         requestInsight(input).then((updatedInsightData) => {
             setIsInsightRequested(false);
             updateInsightData({
@@ -59,6 +62,7 @@ export default function App()
                     content: getLatestMeaningful(updatedInsightData.content, insightData?.content),
                 }
             });
+            setIsDisplayLastAssistantMessage(true);
         });
     };
 
@@ -91,6 +95,10 @@ export default function App()
         });
         return await response.json();
     };
+
+    const lastAssistantMessage = insightData
+        ? insightData.conversation.filter(item => item.role === "assistant").reverse().pop()
+        : null;
 
     return (
         <div className={styles.app}>
@@ -127,6 +135,9 @@ export default function App()
                 }
             />
             <Control name={"Start New"} position={0} handler={onNew}/>
+            {isDisplayLastAssistantMessage ? (
+                <Toaster content={lastAssistantMessage}/>
+            ) : null}
         </div>
     );
 }
