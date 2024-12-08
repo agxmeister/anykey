@@ -21,10 +21,20 @@ export default function Content({title, content}: InsightsProps)
 
     return (
         <div className={styles.content}>
-            <div className={styles.title}>{title}</div>
-            {displayContent ? (
-                <div className={styles.markdown} dangerouslySetInnerHTML={{__html: displayContent}}/>
-            ) : null}
+            <div className={styles.title}>
+                {title
+                    ? title
+                    : <span className={styles.empty}>{"To be defined..."}</span>
+                }
+            </div>
+            <div className={styles.content}>
+                {content
+                    ? displayContent ? (
+                        <div className={styles.markdown} dangerouslySetInnerHTML={{__html: displayContent}}/>
+                    ) : null
+                    : <span className={styles.empty}>{"Continue to explain yourself, do not stop! :-) The content will be updated as you go."}</span>
+                }
+            </div>
         </div>
     );
 }

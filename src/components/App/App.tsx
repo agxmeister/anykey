@@ -50,12 +50,29 @@ export default function App()
 
     const onUserInputReady = (input: string) => {
         setIsInsightRequested(true)
-        requestInsight(input).then((insightData) => {
+        requestInsight(input).then((updatedInsightData) => {
             setIsInsightRequested(false);
-            localStorage.setItem("insightData", JSON.stringify(insightData));
-            setInsightData(insightData);
+            updateInsightData({
+                ...updatedInsightData,
+                ...{
+                    title: getLatestMeaningful(updatedInsightData.title, insightData?.title),
+                    content: getLatestMeaningful(updatedInsightData.content, insightData?.content),
+                }
+            });
         });
     };
+
+    const updateInsightData = (insightData: InsightData) => {
+        localStorage.setItem("insightData", JSON.stringify(insightData));
+        setInsightData(insightData);
+    }
+
+    const getLatestMeaningful = (newValue: string, oldValue: string|null): string => {
+        if (!newValue && oldValue) {
+            return oldValue
+        }
+        return newValue
+    }
 
     const onToggleRecording = (isRecordingStarted: boolean) => {
         setIsRecordingStarted(isRecordingStarted);
