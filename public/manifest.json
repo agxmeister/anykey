@@ -1,8 +1,8 @@
 {
     "lang": "en-us",
-    "name": "Jeeves",
-    "short_name": "Jeeves",
-    "description": "Jeeves is an AI-powered assistant that helps you manage your website.",
+    "name": "Quick-Quotes Quill",
+    "short_name": "Quill",
+    "description": "Quick-Quotes Quill is an AI-powered assistant that helps you manage your website.",
     "start_url": "/index.html",
     "background_color": "#f2e8cf",
     "theme_color": "#f2e8cf",
